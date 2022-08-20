@@ -1,3 +1,3 @@
 # Python Básico Diversos
 
-Este repositório é uma coleção de diversos exemplos de código em Python.
+Este repositório é uma coleção de diversos exemplos básicos de código em Python.
