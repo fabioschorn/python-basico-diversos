@@ -1,19 +1,19 @@
-print("Digite números inteiros, cada um seguido de enter, ou apenas Enter para finalizar o programa.")
+print("Digite números inteiros, cada um seguido de Enter, ou ˆD ou ˆZ para finalizar o programa.")
 
 total = 0
 count = 0
 
 while True:
-    line = input("integer: ")
-    if line:
-        try:
+    try:
+        line = input()
+        if line:
             number = int(line)
-        except ValueError as err:
-            print(err)
-            continue
-        total += number
-        count += 1
-    else:
+            total += number
+            count += 1
+    except ValueError as err:
+        print(err)
+        continue
+    except EOFError:
         break
 
     if count:
