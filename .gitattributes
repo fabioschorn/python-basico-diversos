@@ -1,2 +1,8 @@
-python-basico-diversos/examples/**/**/*.py linguist-detectable=true
-python-basico-diversos/examples/**/**/*.py3 linguist-detectable=true
+# Set default behavior to automatically normalize line endings.
+*                 text=auto
+
+CHANGELOG.md      merge=union
+
+*.lock            text -diff
+package.json      text eol=lf
+package-lock.json text -diff
