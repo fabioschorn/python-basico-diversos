@@ -1,2 +1,2 @@
-/examples/**/*.py linguist-detectable=true
-/examples/**/*.py3 linguist-detectable=true
+/**/*.py linguist-detectable=true
+/**/*.py3 linguist-detectable=true
