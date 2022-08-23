@@ -1,5 +1,7 @@
-# Python Básico Diversos
+# Miscellaneous Basic Python
 
-Este repositório é uma coleção de diversos exemplos básicos de código em Python.
+This repository is a collection of several basic Python code examples.
 
-OBS: Exemplos de código retirados do livro Python 3 do Mark Summerfield.
+- [Examples](https://github.com/fabioschorn/python-basico-diversos/tree/main/examples)
+
+NOTE: Code examples taken from Mark Summerfield's Python 3 book.
