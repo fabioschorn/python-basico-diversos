@@ -1,4 +1,4 @@
-print("Digite números inteiros, cada um seguido de Enter, ou ˆD para finalizar o programa.")
+print("Digite números inteiros, cada um seguido de Enter, ou ˆD ou ˆZ para finalizar o programa.")
 
 total = 0
 count = 0
