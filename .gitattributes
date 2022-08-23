@@ -1,2 +1,2 @@
-examples/**/*.py linguist-detectable=true
-examples/**/*.py3 linguist-detectable=true
+python-basico-diversos/examples/**/*.py linguist-detectable=true
+python-basico-diversos/examples/**/*.py3 linguist-detectable=true
