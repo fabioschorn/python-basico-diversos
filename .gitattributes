@@ -3,25 +3,25 @@
 # Source files
 # ============
 examples/**.pxd    text diff=python
-examples/*/*.py     text diff=python
-examples/*/*.py3    text diff=python
-examples/*/*.pyw    text diff=python
-examples/*/*.pyx    text diff=python
-examples/*/*.pyz    text diff=python
-examples/*/*.pyi    text diff=python
+examples/**.py     text diff=python
+examples/**.py3    text diff=python
+examples/**.pyw    text diff=python
+examples/**.pyx    text diff=python
+examples/**.pyz    text diff=python
+examples/**.pyi    text diff=python
 
 # Binary files
 # ============
-examples/*/*.db     binary
-examples/*/*.p      binary
-examples/*/*.pkl    binary
-examples/*/*.pickle binary
-examples/*/*.pyc    binary export-ignore
-examples/*/*.pyo    binary export-ignore
-examples/*/*.pyd    binary
+examples/**.db     binary
+examples/**.p      binary
+examples/**.pkl    binary
+examples/**.pickle binary
+examples/**.pyc    binary export-ignore
+examples/**.pyo    binary export-ignore
+examples/**.pyd    binary
 
 # Jupyter notebook
-examples/*/*.ipynb  text
+examples/**.ipynb  text
 
 # Note: .db, .p, and .pkl files are associated
 # with the python modules ``pickle``, ``dbm.*``,
