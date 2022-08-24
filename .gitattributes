@@ -28,3 +28,4 @@ examples/**/*.ipynb  text
 # with the python modules ``pickle``, ``dbm.*``,
 # ``shelve``, ``marshal``, ``anydbm``, & ``bsddb``
 # (among others).
+README.md    linguist-detectable=false
