@@ -3,7 +3,7 @@
 # Source files
 # ============
 examples/**/*.pxd    text diff=python
-examples/**/*.py     text diff=python
+examples/**/*.py     linguist-detectable=true
 examples/**/*.py3    text diff=python
 examples/**/*.pyw    text diff=python
 examples/**/*.pyx    text diff=python
