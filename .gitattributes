@@ -4,7 +4,7 @@
 # Source files
 # ============
 examples/**/*.pxd    text diff=python
-examples/**/*.py     text eol=crlf
+examples/sum-division/*.py    linguist-detectable=true
 examples/**/*.py3    text diff=python
 examples/**/*.pyw    text diff=python
 examples/**/*.pyx    text diff=python
