@@ -1,29 +1,17 @@
-# Basic .gitattributes for a python repo.
+# Set the default behavior, in case people don't have core.autocrlf set.
+* text=auto
 
-# Source files
-# ============
-examples/**/*.pxd text diff=python
-examples/**/*.py text diff=python
-examples/**/*.py3 text diff=python
-examples/**/*.pyw text diff=python
-examples/**/*.pyx text diff=python
-examples/**/*.pyz text diff=python
-examples/**/*.pyi text diff=python
+# Explicitly declare text files you want to always be normalized and converted
+# to native line endings on checkout.
+*.md linguist-detectable=true
+*.json linguist-detectable=true
+*.template linguist-detectable=true
+*.py linguist-detectable=true
+*.yml linguist-detectable=true
 
-# Binary files
-# ============
-examples/**/*.db binary
-examples/**/*.p binary
-examples/**/*.pkl binary
-examples/**/*.pickle binary
-examples/**/*.pyc binary export-ignore
-examples/**/*.pyo binary export-ignore
-examples/**/*.pyd binary
+# Declare files that will always have CRLF line endings on checkout.
+*.sln text eol=crlf
 
-# Jupyter notebook
-examples/**/*.ipynb text
-
-# Note: .db, .p, and .pkl files are associated
-# with the python modules ``pickle``, ``dbm.*``,
-# ``shelve``, ``marshal``, ``anydbm``, & ``bsddb``
-# (among others).
+# Denote all files that are truly binary and should not be modified.
+*.png binary
+*.jpg binary
