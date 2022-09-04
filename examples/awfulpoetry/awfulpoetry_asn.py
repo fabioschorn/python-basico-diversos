@@ -11,7 +11,7 @@ adverbs = ["devagar", "rápido", "lentamente", "rapidamente", "depressa", "devag
 
 sentence=[[articles,subjects,verbs,adverbs],[articles,subjects,verbs]]
 
-lines = 5
+lines = 9
 if len(sys.argv) > 1:
         try:
                 if 1 <= int(sys.argv[1]) <= 10:
