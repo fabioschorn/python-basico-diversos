@@ -1,6 +1,6 @@
 # Miscellaneous Basic Python
 
-This repository is a collection of several basic Python code examples.
+This repository is a collection of several basic Python code examples and my basic codes...
 
 - [Examples](https://github.com/fabioschorn/python-basico-diversos/tree/main/examples)
 
