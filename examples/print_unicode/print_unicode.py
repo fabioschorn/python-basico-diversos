@@ -15,7 +15,7 @@ def print_unicode_table(word):
         if word is None or word in name.lower():
             print("{0:7} {0:5X} {0:^3c} {1}".format(code, name.title()))
         code += 1
-# If the program is called from the command line and the word is empty
+# If the program is called with a argument "-h" or "--help" print the help
 if __name__ == "__main__":
     word = None
     if len(sys.argv) > 1:
