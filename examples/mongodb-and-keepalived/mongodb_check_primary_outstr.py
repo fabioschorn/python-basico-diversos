@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+
 from pymongo import MongoClient
 from pymongo.errors import ConnectionFailure
 import sys
