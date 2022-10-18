@@ -41,4 +41,5 @@ equation = ("{0}x\N{SUPERSCRIPT TWO} + {1}x + {2} = 0 has "
             " \N{RIGHTWARDS ARROW} x = {3}").format(a, b, c, x1)
 if x2 is not None:
     equation += " or x = {0}".format(x2)
+
 print(equation)
