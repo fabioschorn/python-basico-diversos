@@ -27,6 +27,7 @@ def main():
 
     def print_end():
         print("</table>")
+
     def print_line(line, color, maxwidth):
         print("<tr bgcolor=' {0} '>".format(color))
         fields = extract_fields(line)
@@ -41,11 +42,11 @@ def main():
                 except ValueError:
                     field = field.title()
                     field = field.replace(" And ", " and ")
-#                    field = escape_html(field)
+                    field = escape_html(field)
                     if len(field) <= maxwidth:
                         print("<td>{0}</td>".format(field))
                     else:
-                        print("<td>{0}...</td>".format(field[:maxwidth]))
+                        print("<td>{0:.{1}}...</td>".format(field, maxwidth))
         print("</tr>")
 
     def extract_fields(line):
