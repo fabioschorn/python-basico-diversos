@@ -38,7 +38,7 @@ def add_to_known_hosts(ip_address):
 
     except subprocess.CalledProcessError as e:
         print(f"Error adding {ip_address} to known_hosts.")
-        print(e.output.decode())
+        print(f"SSH Error Output: {e.returncode}")
 
 def main():
     ip_addresses = get_ip_addresses(file_path)
