@@ -25,8 +25,3 @@ combined_df = pd.concat(dataframes, ignore_index=True)
 # Save to CSV
 combined_df.to_csv(output_csv, index=False)
 print("Completed", output_csv)
-
-# Read the CSV file, remove the .json extension from the 'aws_account_number' column, and save it again
-df['aws_account_number'] = df['aws_account_number'].apply(lambda x: x.split('.')[0])
-df.to_csv(output_csv, index=False)
-print("Completed", output_csv)
