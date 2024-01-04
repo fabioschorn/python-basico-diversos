@@ -2,6 +2,7 @@
 import os
 import json
 import pandas as pd
+from datetime import datetime
 
 # Get current working directory
 json_directory = '/path/to/json/files'
@@ -44,9 +45,14 @@ df = df[cols]
 df.to_csv(output_csv, index=False)
 print("Part 3: CSV change column order created!", output_csv)
 
+# Generate timestamp
+current_time = datetime.now().strftime("%Y%m%d_%H%M%S")
+
+# Define the path for the Excel file with timestamp
+output_excel = f'/path/to/output/cloud_report_{current_time}.xlsx'
+
 # Convert CSV to Excel
-output_excel = '/path/to/output/cloud_report.xlsx'  # Define the path for the Excel file
-df.to_excel(output_excel, index=False)  # Save the DataFrame as an Excel file
+df.to_excel(output_excel, index=False)
 print("Part 4: Excel file created!", output_excel)
 
 # Delete the Original CSV File
