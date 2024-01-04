@@ -3,30 +3,28 @@ import os
 import json
 import pandas as pd
 
-# Define the directory containing the JSON files and the output CSV file path
+# Get current working directory
 json_directory = '/path/to/json/files'
 output_csv = '/path/to/output/cloud_report.csv'
 dataframes = []
 
-# Iterate over each file in the directory
 for filename in os.listdir(json_directory):
     if filename.endswith('.json'):
         file_path = os.path.join(json_directory, filename)
         with open(file_path) as json_file:
             data = json.load(json_file)
-            # Convert the JSON data to a DataFrame
+            # Convert data to DataFrame
             df = pd.DataFrame(data)
-            # Add a column with the filename including the .json extension
+            # Add a new column for the filename
             df['aws_account_number'] = filename
-            # Append the DataFrame to the list of DataFrames
+            # Append the DataFrame to the list
             dataframes.append(df)
 
-# Combine all DataFrames into a single DataFrame
+# Combine all DataFrames
 combined_df = pd.concat(dataframes, ignore_index=True)
-
-# Write the combined DataFrame to a CSV file
+# Save to CSV
 combined_df.to_csv(output_csv, index=False)
-print("CSV file generated with .json extensions.")
+print("Completed", output_csv)
 
 # Read the CSV file, remove the .json extension from the 'aws_account_number' column, and save it again
 df = pd.read_csv(output_csv)
