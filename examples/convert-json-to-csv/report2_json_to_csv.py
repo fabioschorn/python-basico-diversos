@@ -2,8 +2,14 @@
 import os
 import json
 import pandas as pd
+import re
 
-# Get current working directory
+def sanitize_filename(filename):
+    """Remove special characters and return a clean filename."""
+    # Remove the file extension and any non-alphanumeric characters (excluding underscores and dashes)
+    return re.sub(r'[^a-zA-Z0-9_-]', '', os.path.splitext(filename)[0])
+
+# Define the directory containing the JSON files and the output CSV file path
 json_directory = '/path/to/json/files'
 output_csv = '/path/to/output/cloud_report.csv'
 dataframes = []
@@ -16,10 +22,10 @@ for filename in os.listdir(json_directory):
             data = json.load(json_file)
             # Convert the JSON data to a DataFrame
             df = pd.DataFrame(data)
-            # Remove the '.json' extension from the filename
-            filename_without_extension = os.path.splitext(filename)[0]
-            # Add a column with the filename without the extension
-            df['aws_account_number'] = filename_without_extension
+            # Sanitize the filename to remove special characters
+            clean_filename = sanitize_filename(filename)
+            # Add a column with the sanitized filename, named 'aws_account_number'
+            df['aws_account_number'] = clean_filename
             # Append the DataFrame to the list of DataFrames
             dataframes.append(df)
 
