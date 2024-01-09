@@ -2,7 +2,11 @@ import csv
 import requests
 import json
 
-def fetch_and_save_data(product_name, user_token, csv_file_path, output_directory):
+def fetch_and_save_data(product_name, user_token_file, csv_file_path, output_directory):
+    # Read the user token from the specified file
+    with open(user_token_file, 'r') as token_file:
+        user_token = token_file.read()
+
     with open(csv_file_path, mode='r', newline='', encoding='utf-8') as file:
         reader = csv.DictReader(file)
         for row in reader:
@@ -19,21 +23,10 @@ def fetch_and_save_data(product_name, user_token, csv_file_path, output_director
                 else:
                     print(f'Failed to fetch data for cloudAccountId: {cloud_account_id}')
 
-def get_multi_line_input(prompt):
-    print(prompt)
-    lines = []
-    while True:
-        line = input()
-        if line == "END":
-            break
-        lines.append(line)
-    return '\n'.join(lines)
-
 # Example usage
 product_name = input("Enter the product name: ")
-print("Enter your user token (Type 'END' on a new line when finished):")
-user_token = get_multi_line_input("Enter your user token:")
+user_token_file = input("Enter the path to the user token file: ")
 csv_file_path = 'product_list.csv'  # Update this if your CSV file is in a different directory
 output_directory = 'json_results'  # Update this if you want to save JSON files in a different directory
 
-fetch_and_save_data(product_name, user_token, csv_file_path, output_directory)
+fetch_and_save_data(product_name, user_token_file, csv_file_path, output_directory)
