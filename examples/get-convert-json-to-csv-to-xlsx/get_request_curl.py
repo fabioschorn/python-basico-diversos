@@ -14,7 +14,7 @@ def fetch_and_save_data(product_name, user_token, csv_file_path, output_director
                 cloud_account_id = row['cloudAccountId']
                 external_account_number = row['externalAccountNumber']
                 response = requests.get(
-                    f'https://api.cloudcheckr.com/api/v2/cloud/{cloud_account_id}/assessments/failures',
+                    f'https://api.fs.com.br/api/v2/cloud/{cloud_account_id}/assessments/failures',
                     headers={'accept': 'application/json', 'Authorization': f'Bearer {user_token}'}
                 )
                 if response.status_code == 200:
