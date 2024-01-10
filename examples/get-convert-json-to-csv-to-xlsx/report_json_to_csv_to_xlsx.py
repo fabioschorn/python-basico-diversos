@@ -5,13 +5,13 @@ import pandas as pd
 from datetime import datetime
 
 # Get current working directory
-json_directory = '/path/to/json/files'
-output_csv = '/path/to/output/cloud_report.csv'
+output_directory = '/path/to/json/files' # Update this if you want to use a different directory
+output_csv = '/path/to/output/cloud_report.csv' # Update this if you want to use a different directory
 dataframes = []
 
-for filename in os.listdir(json_directory):
+for filename in os.listdir(output_directory):
     if filename.endswith('.json'):
-        file_path = os.path.join(json_directory, filename)
+        file_path = os.path.join(output_directory, filename)
         with open(file_path) as json_file:
             data = json.load(json_file)
             # Convert data to DataFrame
@@ -49,7 +49,7 @@ print("Part 3: CSV change column order created!", output_csv)
 current_time = datetime.now().strftime("%Y%m%d_%H%M%S")
 
 # Define the path for the Excel file with timestamp
-output_excel = f'/path/to/output/cloud_report_{current_time}.xlsx'
+output_excel = f'/path/to/output/cloud_report_{current_time}.xlsx' # Update this if you want to use a different directory
 
 # Convert CSV to Excel
 df.to_excel(output_excel, index=False)
