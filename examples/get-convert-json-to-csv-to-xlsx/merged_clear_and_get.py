@@ -4,7 +4,7 @@ import requests
 import json
 
 # Clear current working directory
-output_directory = 'json_results' # Update this if you want to save JSON files in a different directory
+output_directory = 'json_results'
 
 # Get the list of files in the directory and show the list of files
 files = os.listdir(output_directory)
@@ -36,8 +36,10 @@ def fetch_and_save_data(product_name, user_token_file, csv_file_path, output_dir
                     headers={'accept': 'application/json', 'Authorization': f'Bearer {user_token}'}
                 )
                 if response.status_code == 200:
-                    with open(f'{output_directory}/{external_account_number}.json', 'w') as json_file:
+                    file_name = f'{output_directory}/{external_account_number}.json'
+                    with open(file_name, 'w') as json_file:
                         json.dump(response.json(), json_file)
+                        print(f'File written: {file_name}')
                 else:
                     print(f'Failed to fetch data for cloudAccountId: {cloud_account_id}')
 
