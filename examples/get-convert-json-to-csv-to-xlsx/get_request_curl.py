@@ -1,6 +1,14 @@
+import os
 import csv
 import requests
 import json
+
+def clear_directory(directory):
+    files_to_remove = [f for f in os.listdir(directory) if f.endswith(".json")]
+    print("The following files are in the directory:", files_to_remove)
+    for filename in files_to_remove:
+        os.remove(os.path.join(directory, filename))
+    print("The following files were removed from the directory:", files_to_remove)
 
 def fetch_and_save_data(product_name, user_token_file, csv_file_path, output_directory):
     # Read the user token from the specified file
@@ -23,10 +31,12 @@ def fetch_and_save_data(product_name, user_token_file, csv_file_path, output_dir
                 else:
                     print(f'Failed to fetch data for cloudAccountId: {cloud_account_id}')
 
-# Example usage
+# Clear the directory first
+json_directory = 'json_results'
+clear_directory(json_directory)
+
+# Then fetch and save data
 product_name = input("Enter the product name: ")
 user_token_file = input("Enter the path to the user token file: ")
 csv_file_path = 'product_list.csv'  # Update this if your CSV file is in a different directory
-output_directory = 'json_results'  # Update this if you want to save JSON files in a different directory
-
-fetch_and_save_data(product_name, user_token_file, csv_file_path, output_directory)
+fetch_and_save_data(product_name, user_token_file, csv_file_path, json_directory)
