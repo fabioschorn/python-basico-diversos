@@ -55,7 +55,7 @@ def csv_to_excel(output_csv, output_excel):
     cols = cols[-1:] + cols[:-1]
     df = df[cols]
     df.to_excel(output_excel, index=False)
-    print("Excel file created!", output_excel)
+    print("Excel file created!!!", output_excel)
     os.remove(output_csv)
     print("CSV file deleted!", output_csv)
 
@@ -69,7 +69,7 @@ clear_directory(output_directory) # Clear the directory before running the scrip
 
 product_name = input("Enter the product name: ")
 user_token_file = input("Enter the path to the user token file: ")
-csv_file_path = 'product_list.csv'  # Update this if your CSV file is in a different directory
+csv_file_path = 'product_list.csv'  # Update this for the CSV product list file
 fetch_and_save_data(product_name, user_token_file, csv_file_path, output_directory)
 json_to_csv(output_directory, output_csv)
 csv_to_excel(output_csv, output_excel)
