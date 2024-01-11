@@ -75,7 +75,7 @@ def csv_to_excel(output_csv, output_excel):
     os.remove(output_csv)
     print("CSV file deleted!", output_csv)
 
-# Main script starts here
+# Main script starts here - change the values below
 output_directory = 'json_results'  
 output_csv = '/path/to/output/cloud_report.csv'  
 current_time = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -85,12 +85,12 @@ clear_directory(output_directory)
 
 product_name = input("Enter the product name: ")
 user_token_file = input("Enter the path to the user token file: ")
-csv_file_path = 'product_list.csv'
+csv_file_path = 'product_list.csv' # Change this to the path of your product list CSV
 
 fetch_and_save_data(product_name, user_token_file, csv_file_path, output_directory)
 json_to_csv(output_directory, output_csv)
 
-# New block to add environment column and replace old file
+# Block to add environment column and replace old file
 updated_csv = add_environment_column(output_csv, csv_file_path)
 os.remove(output_csv)
 os.rename(updated_csv, output_csv)
