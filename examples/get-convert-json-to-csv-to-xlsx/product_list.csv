@@ -1,0 +1,7 @@
+productName,cloudAccountId,externalAccountNumber,creationDate,vendor,name,environment
+exp-on-site,e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855,123456789009,2019-01-01T00:00:00Z,Amazon,Amazon Elastic Compute Cloud,prod
+exp-on-marketplace,e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855,123456789027,2019-01-01T00:00:00Z,Amazon,Amazon Elastic Compute Cloud,nonprod
+exp-on-tax,e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855,123456789011,2019-01-01T00:00:00Z,Amazon,Amazon Elastic Compute Cloud,prod
+exp-on-sm,e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855,123456789010,2019-01-01T00:00:00Z,Amazon,Amazon Elastic Compute Cloud,nonprod
+exp-on-sec,e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855,123456789021,2019-01-01T00:00:00Z,Amazon,Amazon Elastic Compute Cloud,nonprod
+exp-on-dev,e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855,123456789080,2019-01-01T00:00:00Z,Amazon,Amazon Elastic Compute Cloud,nonprod
