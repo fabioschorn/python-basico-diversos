@@ -35,27 +35,6 @@ def fetch_and_save_data(product_name, user_token_file, csv_file_path, output_dir
                 else:
                     print(f'Failed to fetch data for cloudAccountId: {cloud_account_id}')
 
-def add_environment_layer(output_directory, product_list_csv):
-    # Create a mapping from externalAccountNumber to environment
-    environment_map = {}
-    with open(product_list_csv, mode='r', newline='', encoding='utf-8') as file:
-        reader = csv.DictReader(file)
-        for row in reader:
-            environment_map[row['externalAccountNumber']] = row['environment']
-
-    # Update JSON files with environment info
-    for filename in os.listdir(output_directory):
-        if filename.endswith('.json'):
-            account_number = filename.replace('.json', '')
-            environment = environment_map.get(account_number, 'Unknown')
-            file_path = os.path.join(output_directory, filename)
-            with open(file_path, 'r+') as json_file:
-                data = json.load(json_file)
-                data['environment'] = environment  # Add environment data
-                json_file.seek(0)
-                json.dump(data, json_file)
-                json_file.truncate()
-
 def json_to_csv(output_directory, output_csv):
     dataframes = []
     for filename in os.listdir(output_directory):
@@ -70,6 +49,22 @@ def json_to_csv(output_directory, output_csv):
     combined_df.to_csv(output_csv, index=False)
     print("CSV file created!", output_csv)
 
+def add_environment_column(output_csv, product_list_csv):
+    # Read the existing CSV and the product list CSV
+    df = pd.read_csv(output_csv)
+    product_list_df = pd.read_csv(product_list_csv)
+
+    # Create a mapping from externalAccountNumber to environment
+    environment_map = dict(zip(product_list_df.externalAccountNumber, product_list_df.environment))
+
+    # Map the environment to the existing dataframe
+    df['environment'] = df['aws_account_number'].map(environment_map)
+
+    # Save the updated dataframe
+    new_csv = output_csv.replace('.csv', '_updated.csv')
+    df.to_csv(new_csv, index=False)
+    return new_csv
+
 def csv_to_excel(output_csv, output_excel):
     df = pd.read_csv(output_csv)
     cols = df.columns.tolist()
@@ -80,19 +75,24 @@ def csv_to_excel(output_csv, output_excel):
     os.remove(output_csv)
     print("CSV file deleted!", output_csv)
 
-# Main script starts here - update the variables below
-output_directory = 'json_results'  # Update this if you want to use a different directory
-output_csv = '/path/to/output/cloud_report.csv'  # Update this for the CSV file
+# Main script starts here
+output_directory = 'json_results'  
+output_csv = '/path/to/output/cloud_report.csv'  
 current_time = datetime.now().strftime("%Y%m%d_%H%M%S")
-output_excel = f'/path/to/output/cloud_report_{current_time}.xlsx'  # Update this for the Excel file
+output_excel = f'/path/to/output/cloud_report_{current_time}.xlsx'
 
-clear_directory(output_directory) # Clear the directory before running the script
+clear_directory(output_directory) 
 
 product_name = input("Enter the product name: ")
 user_token_file = input("Enter the path to the user token file: ")
-csv_file_path = 'product_list.csv'  # Update this for the CSV product list file
+csv_file_path = 'product_list.csv'
 
 fetch_and_save_data(product_name, user_token_file, csv_file_path, output_directory)
-add_environment_layer(output_directory, csv_file_path)  # New function call
 json_to_csv(output_directory, output_csv)
+
+# New block to add environment column and replace old file
+updated_csv = add_environment_column(output_csv, csv_file_path)
+os.remove(output_csv)
+os.rename(updated_csv, output_csv)
+
 csv_to_excel(output_csv, output_excel)
