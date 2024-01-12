@@ -1,0 +1,9 @@
+compliance,instanceName,provider,agent1,agent2,agent3,nonOsMissingPatches,osMissingPatches,ip
+Fail,myinstance 5,AWS,Pass,Fail,Pass,0,1,192.156.42.176
+Fail,myinstance 6,AWS,Pass,Fail,Fail,0,20,pending ip
+Fail,myinstance-4,AWS,Pass,Fail,Pass,0,42,192.167.32.11
+Fail,myinstance,AWS,Fail,Fail,Fail,0,2,192.168.10.21
+Fail,myinstance 9,AWS,Fail,Fail,Pass,0,1,pending ip
+Fail,myinstance 3,AWS,Fail,Fail,Fail,0,3,192.172.11.50
+Fail,myinstance 11,AWS,Fail,Fail,Fail,0,1,pending ip
+Fail,myinstance 12,AWS,Fail,Fail,Pass,0,3,pending ip

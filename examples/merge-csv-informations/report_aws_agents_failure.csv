@@ -1,0 +1,9 @@
+compliance,instanceName,provider,agent1,agent2,agent3,nonOsMissingPatches,osMissingPatches
+Fail,myinstance 5,AWS,Pass,Fail,Pass,0,1
+Fail,myinstance 6,AWS,Pass,Fail,Fail,0,20
+Fail,myinstance-4,AWS,Pass,Fail,Pass,0,42
+Fail,myinstance,AWS,Fail,Fail,Fail,0,2
+Fail,myinstance 9,AWS,Fail,Fail,Pass,0,1
+Fail,myinstance 3,AWS,Fail,Fail,Fail,0,3
+Fail,myinstance 11,AWS,Fail,Fail,Fail,0,1
+Fail,myinstance 12,AWS,Fail,Fail,Pass,0,3
