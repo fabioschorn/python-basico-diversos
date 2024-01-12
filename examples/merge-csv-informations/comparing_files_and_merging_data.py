@@ -1,8 +1,8 @@
 import pandas as pd
 
 # Read the CSV files
-csv_file_1 = '/Users/fabioschorn/Documents/VS-Code_FS/python-basico-diversos/examples/merge-csv-informations/report_aws_agents_failure.csv'  # Update the path to your first CSV file
-csv_file_2 = '/Users/fabioschorn/Documents/VS-Code_FS/python-basico-diversos/examples/merge-csv-informations/account_instance_name_ip.csv'  # Update the path to your second CSV file
+csv_file_1 = '/YOUR-PATH/report_aws_agents_failure.csv'  # Update the path to your first CSV file
+csv_file_2 = '/YOUR-PATH/account_instance_name_ip.csv'  # Update the path to your second CSV file
 
 df1 = pd.read_csv(csv_file_1)
 df2 = pd.read_csv(csv_file_2)
@@ -14,7 +14,7 @@ name_to_ip_map = dict(zip(df2['name'], df2['ip']))
 df1['ip'] = df1['instanceName'].map(name_to_ip_map).fillna('pending ip')
 
 # Save the enriched DataFrame to a new CSV file
-output_csv = '/Users/fabioschorn/Documents/VS-Code_FS/python-basico-diversos/examples/merge-csv-informations/enriched_csv.csv'  # You can change the name of the output file
+output_csv = '/YOUR-PATH/enriched_csv.csv'  # You can change the name of the output file
 df1.to_csv(output_csv, index=False)
 
 print(f"New CSV file created: {output_csv}")
