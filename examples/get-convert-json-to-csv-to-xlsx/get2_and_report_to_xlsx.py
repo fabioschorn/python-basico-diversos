@@ -50,42 +50,35 @@ def json_to_csv(output_directory, output_csv):
     print("CSV file created!", output_csv)
 
 def add_environment_column(output_csv, product_list_csv):
-    # Read the existing CSV and the product list CSV
     df = pd.read_csv(output_csv)
     product_list_df = pd.read_csv(product_list_csv)
-
-    # Create a mapping from externalAccountNumber to environment
     environment_map = dict(zip(product_list_df.externalAccountNumber, product_list_df.environment))
-
-    # Map the environment to the existing dataframe
     df['environment'] = df['aws_account_number'].map(environment_map)
-
-    # Save the updated dataframe
     new_csv = output_csv.replace('.csv', '_updated.csv')
     df.to_csv(new_csv, index=False)
     return new_csv
 
 def csv_to_excel(output_csv, output_excel):
     df = pd.read_csv(output_csv)
-    cols = df.columns.tolist()
-    cols = cols[-1:] + cols[:-1]
-    df = df[cols]
+    # Move 'aws_account_number' column to the first position
+    column_order = ['aws_account_number'] + [col for col in df.columns if col != 'aws_account_number']
+    df = df[column_order]
     df.to_excel(output_excel, index=False)
     print("Excel file created!!!", output_excel)
     os.remove(output_csv)
     print("CSV file deleted!", output_csv)
 
 # Main script starts here - change the values below
-output_directory = 'json_results'
-output_csv = '/path/to/output/cloud_report.csv'
-current_time = datetime.now().strftime("%Y%m%d_%H%M%S")
-output_excel = f'/path/to/output/cloud_report_{current_time}.xlsx'
+output_directory = 'json_results' 
+output_csv = '/path/to/output/cloud_report.csv' # Change this to the path of your output CSV
+current_time = datetime.now().strftime("%Y%m%d_%H%M%S") # This is used to create a unique filename
+output_excel = f'/path/to/output/cloud_report_{current_time}.xlsx' # Change this to the path of your output Excel file
 
 clear_directory(output_directory) 
 
 product_name = input("Enter the product name: ")
 user_token_file = input("Enter the path to the user token file: ")
-csv_file_path = 'product_list.csv' # Change this to the path of your product list CSV
+csv_file_path = 'product_list.csv'  # Change this to the path of your product list CSV
 
 fetch_and_save_data(product_name, user_token_file, csv_file_path, output_directory)
 json_to_csv(output_directory, output_csv)
