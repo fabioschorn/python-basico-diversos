@@ -77,30 +77,42 @@ def display_product_menu(csv_file_path):
 
     for i, product in enumerate(products, 1):
         print(f"{i} - {product}")
+
+    # Add the 'Press to skip!' option
+    skip_option_number = len(products) + 1
+    print(f"{skip_option_number} - Press to skip!")
+    products.append('Press to skip!')  # Append to the product list for selection handling
+
     return products
 
 # Main script starts here - change the values below
 output_directory = 'json_results' # Change this to the path of your output directory
-output_csv = '/path/to/output/cloud_report.csv' # Change this to the path of your output CSV file
+output_csv = '/path/to/output/cloud_report.csv' # Change this to the path of your output CSV
 current_time = datetime.now().strftime("%Y%m%d_%H%M%S")
 output_excel = f'/path/to/output/cloud_report_{current_time}.xlsx' # Change this to the path of your output Excel file
 
 clear_directory(output_directory)
 
-csv_file_path = 'product_list.csv'  # Change this to the path of your product list CSV file
-products = display_product_menu(csv_file_path) # Display product menu
+csv_file_path = 'product_list.csv'  # Change this to the path of your product list CSV
+products = display_product_menu(csv_file_path)
 
 selected_product_index = int(input("Select a product number: ")) - 1
-product_name = products[selected_product_index]
 
-user_token_file = input("Enter the path to the user token file: ")
+# Check if the user selected the 'Press to skip!' option
+if selected_product_index >= len(products) - 1:
+    print("You chose to skip.")
+    # Handle the skip action here (e.g., exit the program or continue with a default action)
 
-fetch_and_save_data(product_name, user_token_file, csv_file_path, output_directory)
-json_to_csv(output_directory, output_csv)
+else:
+    product_name = products[selected_product_index]
+    user_token_file = input("Enter the path to the user token file: ")
 
-# Block to add environment column and replace old file
-updated_csv = add_environment_column(output_csv, csv_file_path)
-os.remove(output_csv)
-os.rename(updated_csv, output_csv)
+    fetch_and_save_data(product_name, user_token_file, csv_file_path, output_directory)
+    json_to_csv(output_directory, output_csv)
 
-csv_to_excel(output_csv, output_excel)
+    # Block to add environment column and replace old file
+    updated_csv = add_environment_column(output_csv, csv_file_path)
+    os.remove(output_csv)
+    os.rename(updated_csv, output_csv)
+
+    csv_to_excel(output_csv, output_excel)
