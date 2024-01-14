@@ -12,7 +12,7 @@ def clear_directory(directory):
         if filename.endswith(".json"):
             file_path = os.path.join(directory, filename)
             os.remove(file_path)
-    print("The following files were removed from the directory:", os.listdir(directory))
+    print("The old JSON files have been removed!")
 
 def fetch_and_save_data(product_name, user_token_file, csv_file_path, output_directory):
     with open(user_token_file, 'r') as token_file:
@@ -70,6 +70,8 @@ def csv_to_excel(output_csv, output_excel):
     print("CSV file deleted!", output_csv)
 
 def display_product_menu(csv_file_path):
+    # Display a print space for human comprehension
+    print()
     print("Menu Products:")  # Displaying the menu title
     with open(csv_file_path, mode='r', newline='', encoding='utf-8') as file:
         reader = csv.reader(file)
