@@ -70,6 +70,7 @@ def csv_to_excel(output_csv, output_excel):
     print("CSV file deleted!", output_csv)
 
 def display_product_menu(csv_file_path):
+    print("Menu Products:")  # Displaying the menu title
     with open(csv_file_path, mode='r', newline='', encoding='utf-8') as file:
         reader = csv.reader(file)
         next(reader)  # Skip the header row
@@ -87,13 +88,9 @@ def display_product_menu(csv_file_path):
 
 # Main script starts here - change the values below
 output_directory = 'json_results' # Change this to the path of your output directory
-output_csv = '/path/to/output/cloud_report.csv' # Change this to the path of your output CSV
-current_time = datetime.now().strftime("%Y%m%d_%H%M%S")
-output_excel = f'/path/to/output/cloud_report_{current_time}.xlsx' # Change this to the path of your output Excel file
+output_csv = '/path/to/output/cloud_report.csv' # Change this to the path of your output CSV file
+csv_file_path = 'product_list.csv'  # Change this to the path of your product list CSV file
 
-clear_directory(output_directory)
-
-csv_file_path = 'product_list.csv'  # Change this to the path of your product list CSV
 products = display_product_menu(csv_file_path)
 
 selected_product_index = int(input("Select a product number: ")) - 1
@@ -114,5 +111,9 @@ else:
     updated_csv = add_environment_column(output_csv, csv_file_path)
     os.remove(output_csv)
     os.rename(updated_csv, output_csv)
+
+    # Modify output_excel to include the selected product name
+    current_time = datetime.now().strftime("%Y%m%d_%H%M%S")
+    output_excel = f'/path/to/output/{product_name}_cloud_report_{current_time}.xlsx' # Change this to the path of your output Excel file
 
     csv_to_excel(output_csv, output_excel)
