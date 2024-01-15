@@ -3,9 +3,12 @@ import json
 from getpass import getpass
 
 # URL of the API endpoint that generates the token
-token_generation_url = 'https://api.fs.com.br/docs#/Auth/post_auth_token'
-# Any necessary headers
-headers = {'Content-Type': 'application/json'}
+token_generation_url = 'https://api.fs.com.br/token'
+# Any necessary headers acepted by the API endpoint
+headers = {'accept': 'application/json'}
+
+# Any necessary headers content-type accepted by the API endpoint
+headers['Content-Type'] = 'application/json'
 
 # Prompt user for their username and password
 username = input("Enter your username: ")
