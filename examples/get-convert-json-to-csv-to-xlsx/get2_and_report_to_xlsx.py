@@ -6,13 +6,17 @@ import pandas as pd
 from datetime import datetime
 
 def clear_directory(directory):
-    files = os.listdir(directory)
-    print("The following files are in the directory:", files)
-    for filename in files:
-        if filename.endswith(".json"):
-            file_path = os.path.join(directory, filename)
-            os.remove(file_path)
-    print("The old JSON files have been removed!")
+    if os.path.exists(directory) and os.path.isdir(directory):
+        files = os.listdir(directory)
+        print("The following files are in the directory:", files)
+        for filename in files:
+            if filename.endswith(".json"):
+                file_path = os.path.join(directory, filename)
+                print(f"Removing file: {file_path}")
+                os.remove(file_path)
+        print("The following files were removed from the directory:", os.listdir(directory))
+    else:
+        print(f"The directory {directory} does not exist or is not a directory.")
 
 def fetch_and_save_data(product_name, user_token_file, csv_file_path, output_directory):
     with open(user_token_file, 'r') as token_file:
