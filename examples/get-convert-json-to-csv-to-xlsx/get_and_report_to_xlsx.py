@@ -6,13 +6,17 @@ import pandas as pd
 from datetime import datetime
 
 def clear_directory(directory):
-    files = os.listdir(directory)
-    print("The following files are in the directory:", files)
-    for filename in files:
-        if filename.endswith(".json"):
-            file_path = os.path.join(directory, filename)
-            os.remove(file_path)
-    print("The following files were removed from the directory:", os.listdir(directory))
+    if os.path.exists(directory) and os.path.isdir(directory):
+        files = os.listdir(directory)
+        print("The following files are in the directory:", files)
+        for filename in files:
+            if filename.endswith(".json"):
+                file_path = os.path.join(directory, filename)
+                print(f"Removing file: {file_path}")
+                os.remove(file_path)
+        print("The following files were removed from the directory:", os.listdir(directory))
+    else:
+        print(f"The directory {directory} does not exist or is not a directory.")
 
 def fetch_and_save_data(product_name, user_token_file, csv_file_path, output_directory):
     with open(user_token_file, 'r') as token_file:
@@ -69,24 +73,55 @@ def csv_to_excel(output_csv, output_excel):
     os.remove(output_csv)
     print("CSV file deleted!", output_csv)
 
+def display_product_menu(csv_file_path):
+    # Display a print space for human comprehension
+    print()
+    print("Menu Products:")  # Displaying the menu title
+    with open(csv_file_path, mode='r', newline='', encoding='utf-8') as file:
+        reader = csv.reader(file)
+        next(reader)  # Skip the header row
+        products = sorted(set(row[0] for row in reader))  # Unique product names
+
+    for i, product in enumerate(products, 1):
+        print(f"{i} - {product}")
+
+    # Add the 'Press to skip!' option
+    skip_option_number = len(products) + 1
+    print(f"{skip_option_number} - Press to skip!")
+    products.append('Press to skip!')  # Append to the product list for selection handling
+
+    return products
+
 # Main script starts here - change the values below
 output_directory = 'json_results' # Change this to the path of your output directory
-output_csv = '/path/to/output/cloud_report.csv' # Change this to the path of your output CSV
-current_time = datetime.now().strftime("%Y%m%d_%H%M%S")
-output_excel = f'/path/to/output/cloud_report_{current_time}.xlsx'  # Change this to the path of your output Excel file
+output_csv = '/path/to/output/cloud_report.csv' # Change this to the path of your output CSV file
+csv_file_path = 'product_list.csv'  # Change this to the path of your product list CSV file
 
-clear_directory(output_directory) 
+clear_directory(output_directory) # Clear the output directory before running the script
 
-product_name = input("Enter the product name: ")
-user_token_file = input("Enter the path to the user token file: ")
-csv_file_path = 'product_list.csv'  # Change this to the path of your product list CSV
+products = display_product_menu(csv_file_path)
 
-fetch_and_save_data(product_name, user_token_file, csv_file_path, output_directory)
-json_to_csv(output_directory, output_csv)
+selected_product_index = int(input("Select a product number: ")) - 1
 
-# Block to add environment column and replace old file
-updated_csv = add_environment_column(output_csv, csv_file_path)
-os.remove(output_csv)
-os.rename(updated_csv, output_csv)
+# Check if the user selected the 'Press to skip!' option
+if selected_product_index >= len(products) - 1:
+    print("You chose to skip.")
+    # Handle the skip action here (e.g., exit the program or continue with a default action)
 
-csv_to_excel(output_csv, output_excel)
+else:
+    product_name = products[selected_product_index]
+    user_token_file = input("Enter the path to the user token file: ")
+
+    fetch_and_save_data(product_name, user_token_file, csv_file_path, output_directory)
+    json_to_csv(output_directory, output_csv)
+
+    # Block to add environment column and replace old file
+    updated_csv = add_environment_column(output_csv, csv_file_path)
+    os.remove(output_csv)
+    os.rename(updated_csv, output_csv)
+
+    # Modify output_excel to include the selected product name
+    current_time = datetime.now().strftime("%Y%m%d_%H%M%S")
+    output_excel = f'/path/to/output/{product_name}_cloud_report_{current_time}.xlsx' # Change this to the path of your output Excel file
+
+    csv_to_excel(output_csv, output_excel)
