@@ -14,8 +14,14 @@ headers['Content-Type'] = 'application/json'
 username = input("Enter your username: ")
 password = getpass("Enter your password: ")
 
-# Payload with user-provided credentials
-payload = {'username': username, 'password': password}
+# Payload with user-provided credentials to be sent to the API endpoint
+payload = {
+    "grant_type": "username",
+    "username": username,
+    "password": password,
+    "client_id": "",
+    "client_secret": ""
+}
 
 # Send a POST request to the API endpoint
 response = requests.post(token_generation_url, headers=headers, json=payload)
