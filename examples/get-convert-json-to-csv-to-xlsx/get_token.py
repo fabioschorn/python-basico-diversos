@@ -1,14 +1,12 @@
 import requests
-import json
 from getpass import getpass
+import json
 
 # URL of the API endpoint that generates the token
 token_generation_url = 'https://api.fs.com.br/token'
-# Any necessary headers acepted by the API endpoint
-headers = {'accept': 'application/json'}
 
-# Any necessary headers content-type accepted by the API endpoint
-headers['Content-Type'] = 'application/json'
+# Headers
+headers = {'Accept': 'application/json', 'Content-Type': 'application/x-www-form-urlencoded'}
 
 # Prompt user for their username and password
 username = input("Enter your username: ")
@@ -16,15 +14,15 @@ password = getpass("Enter your password: ")
 
 # Payload with user-provided credentials to be sent to the API endpoint
 payload = {
-    "grant_type": "username",
-    "username": username,
-    "password": password,
-    "client_id": "",
-    "client_secret": ""
+    'grant_type': 'password',  # This is typically a fixed value for this grant type
+    'username': username,
+    'password': password,
+    'client_id': '',  # Fill in if required
+    'client_secret': ''  # Fill in if required
 }
 
 # Send a POST request to the API endpoint
-response = requests.post(token_generation_url, headers=headers, json=payload)
+response = requests.post(token_generation_url, headers=headers, data=payload)
 
 # Check if the request was successful
 if response.status_code == 200:
