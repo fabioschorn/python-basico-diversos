@@ -27,9 +27,11 @@ response = requests.post(token_generation_url, headers=headers, data=payload)
 # Check if the request was successful
 if response.status_code == 200:
     token_data = response.json()
-    # Save the token JSON to a file
-    with open('token.json', 'w') as file:
-        json.dump(token_data, file)
-    print("Token saved to token.json")
+    # Save the token JSON to a file in the current directory
+    with open('token.json', 'w') as f:
+        json.dump(token_data, f)
+    print("Token successfully generated!")
 else:
-    print("Failed to generate token: ", response.status_code)
+    print("Something went wrong!")
+    print("Status code:", response.status_code)
+    print("Response:", response.text)
