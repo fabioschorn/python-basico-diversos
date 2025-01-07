@@ -2,40 +2,38 @@
 
 import requests
 import json
-import base64
 
-def create_jira_issue(
-    jira_base_url,
-    auth_user,
-    auth_pass,
-    project_key,
-    summary,
-    description,
-    issue_type="Story",
-    customfield_10001_value=None,  # e.g. "TeamValueForFeatureLink"
-    customfield_10501_value=None,  # e.g. "TeamValueForCorpTestTeam"
-    assignee_username=None
+def create_jira_issue_with_pat(
+    jira_base_url: str,
+    personal_access_token: str,
+    project_key: str,
+    summary: str,
+    description: str,
+    issue_type: str = "Story",
+    assignee_username: str = None,
+    custom_fields: dict = None
 ):
     """
-    Creates a Jira issue using the REST API v2, filling required custom fields.
+    Creates an issue in a Jira Server (9.12.x) or Data Center instance using a Personal Access Token
+    and the REST API endpoint /rest/api/2/issue.
 
-    :param jira_base_url: Full URL of Jira (e.g. "https://jira.service.test.com")
-    :param auth_user: Username for Basic Auth (or the username part if using token as password)
-    :param auth_pass: Password or personal access token
-    :param project_key: The key of the project where the issue will be created
-    :param summary: Summary (title) of the issue
-    :param description: Description of the issue
-    :param issue_type: The type/name of the Jira issue (default "Story")
-    :param customfield_10001_value: The "Team" value or object for customfield_10001
-    :param customfield_10501_value: The "Team" value or object for customfield_10501
-    :param assignee_username: (Optional) The username to assign the issue to
-    :return: The JSON response from Jira if successful
+    :param jira_base_url: The base URL of your Jira server (e.g. "https://jira.service.test.com").
+    :param personal_access_token: The personal access token (PAT) string.
+                                  Placed in the Authorization: Bearer header.
+    :param project_key: The Jira project key where the issue should be created (e.g. "ABC").
+    :param summary: The summary (title) of the new issue.
+    :param description: The description/body of the issue (plain text or Jira wiki formatting).
+    :param issue_type: Issue type name (e.g. "Story", "Task", "Bug"). Defaults to "Story".
+    :param assignee_username: (Optional) Username to assign the issue (if Jira still supports usernames).
+    :param custom_fields: (Optional) A dict of custom fields (e.g. {"customfield_10001": "Value"}).
+                         If your Jira requires "Team values" or anything else, put them here.
+    :return: A dict representing the JSON response from Jira, typically containing the new issue key.
     """
 
-    # Construct the endpoint for creating an issue
+    # Endpoint for creating issues in Jira Server 9.x
     create_issue_url = f"{jira_base_url}/rest/api/2/issue"
 
-    # Base fields
+    # Base fields for the issue
     fields_data = {
         "project": {"key": project_key},
         "summary": summary,
@@ -43,33 +41,33 @@ def create_jira_issue(
         "issuetype": {"name": issue_type},
     }
 
-    # If these custom fields are required, fill them in here:
-    # The exact syntax depends on how your Jira field is configured (text vs single-select).
-    if customfield_10001_value is not None:
-        fields_data["customfield_10001"] = customfield_10001_value
-
-    if customfield_10501_value is not None:
-        fields_data["customfield_10501"] = customfield_10501_value
-
-    # If you'd like to assign the issue
+    # If specifying an assignee (depends on your Jira config if "name" or "accountId" is needed)
     if assignee_username:
         fields_data["assignee"] = {"name": assignee_username}
 
+    # Merge custom fields if provided (e.g., customfield_10001, customfield_10501, etc.)
+    if custom_fields:
+        fields_data.update(custom_fields)
+
+    # Final JSON payload
     payload = {"fields": fields_data}
 
-    # Basic Auth: username + password/token
-    auth_str = f"{auth_user}:{auth_pass}"
-    b64_auth = base64.b64encode(auth_str.encode()).decode()
-
+    # Use the personal access token in a Bearer auth header
     headers = {
-        "Content-Type": "application/json",
+        "Authorization": f"Bearer {personal_access_token}",
         "Accept": "application/json",
-        "Authorization": f"Basic {b64_auth}"
+        "Content-Type": "application/json"
     }
 
     # Make the POST request
-    response = requests.post(create_issue_url, headers=headers, data=json.dumps(payload))
+    response = requests.post(
+        url=create_issue_url,
+        headers=headers,
+        data=json.dumps(payload),
+        timeout=30
+    )
 
+    # Check for successful creation
     if response.status_code not in (200, 201):
         raise Exception(
             f"Failed to create Jira issue. "
@@ -80,33 +78,48 @@ def create_jira_issue(
 
 
 if __name__ == "__main__":
-    # Example usage
+    # Example usage:
+
+    # 1) Make sure you have the full HTTPS URL
     JIRA_BASE_URL = "https://jira.service.test.com"
-    USERNAME = "myuser"
-    PASSWORD = "mypassword"  # or personal access token, if Jira is set up that way
 
-    # The "Team" values that must be filled
-    # Some fields need a string, others a dictionary { "value": "X" } or { "id": "Y" }
-    CF_10001_VALUE = "TeamValueForFeatureLink"
-    CF_10501_VALUE = "TeamValueForCorpTestTeam"
+    # 2) Replace with your actual personal access token
+    PERSONAL_ACCESS_TOKEN = "YOUR_JIRA_PERSONAL_ACCESS_TOKEN"
 
-    # Or, if it's a single-select field, you might try:
-    # CF_10001_VALUE = {"value": "Feature Link Team A"}
-    # CF_10501_VALUE = {"value": "Corp Test Team A"}
+    # 3) Basic fields
+    PROJECT_KEY = "TEST"
+    SUMMARY = "Sample Story with a Personal Access Token"
+    DESCRIPTION = (
+        "This story was created in Jira Server 9.12.x using a Bearer token (PAT). "
+        "We also added the custom fields to satisfy the required Team fields."
+    )
+
+    # 4) If your Jira requires "Team value" for customfield_10001 or customfield_10501,
+    #    define them here. For example, if the field is a simple text field:
+    #    "customfield_10001": "Team for Feature Link",
+    #    "customfield_10501": "Team for Corp-Test Team"
+    #
+    #    If they are single select fields, you might need e.g.:
+    #    {"customfield_10001": {"value": "MyTeamName"}}
+    #    or even {"id": "1234"} depending on your field config.
+    custom_fields_required = {
+        "customfield_10001": "Team for Feature Link",
+        "customfield_10501": "Team for Corp-Test Team"
+    }
 
     try:
-        created_issue = create_jira_issue(
+        result = create_jira_issue_with_pat(
             jira_base_url=JIRA_BASE_URL,
-            auth_user=USERNAME,
-            auth_pass=PASSWORD,
-            project_key="TEST",
-            summary="New Issue with Required Fields",
-            description="Filling the required custom fields for teams...",
+            personal_access_token=PERSONAL_ACCESS_TOKEN,
+            project_key=PROJECT_KEY,
+            summary=SUMMARY,
+            description=DESCRIPTION,
             issue_type="Story",
-            customfield_10001_value=CF_10001_VALUE,
-            customfield_10501_value=CF_10501_VALUE
+            assignee_username=None,  # or "someuser" if needed
+            custom_fields=custom_fields_required
         )
         print("Issue created successfully!")
-        print(created_issue)
+        print("Response:", result)
+        # Typically includes {'id': '10000', 'key': 'TEST-42', 'self': 'https://...'}
     except Exception as e:
         print("Error creating issue:", e)
