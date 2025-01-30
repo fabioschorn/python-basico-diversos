@@ -4,7 +4,7 @@ import matplotlib.patches as mpatches
 fig, ax = plt.subplots(figsize=(16, 8))
 ax.set_xlim(0, 16)
 ax.set_ylim(0, 8)
-ax.axis("off")
+ax.axis("on") # Turn on if you want to see the axes
 
 # --- Colors ---
 lambda_color = "#F58536"
@@ -106,7 +106,7 @@ ticket_pos  = (12.0, 6.0)
 
 ax.text(*parse_pos, "Lambda:\nParse & Split\nCSV",
         ha="center", va="center", fontsize=9,
-        bbox=dict(boxstyle="round,pad=0.3",
+        bbox=dict(boxstyle="round,pad=0.6",
                   edgecolor="black", facecolor=lambda_color, alpha=0.8))
 
 ax.text(*compare_pos, "Lambda:\nCompare & Identify\n(CSVs Diff)",
@@ -136,8 +136,8 @@ ax.text(*createJira_pos, "Lambda:\nCreate JIRA",
 
 ax.text(*jira_pos, "JIRA",
         ha="center", va="center", fontsize=9,
-        bbox=dict(boxstyle="round,pad=0.3",
-                  edgecolor="black", facecolor=jira_color, alpha=0.8))
+        bbox=dict(boxstyle="round,pad=2.9",
+                  edgecolor="black", facecolor=jira_color, alpha=0.9))
 
 # Row 3
 sendDB_pos  = (6.0, 2.0)
@@ -151,12 +151,12 @@ ax.text(*sendDB_pos, "Lambda:\nSend to DB",
 
 ax.text(*storeDB_pos, "Store QIDs\n(DB)",
         ha="center", va="center", fontsize=9,
-        bbox=dict(boxstyle="round,pad=0.3",
+        bbox=dict(boxstyle="round,pad=1.3",
                   edgecolor="black", facecolor=db_color, alpha=0.8))
 
 ax.text(*teams_pos, "Teams\n(Signed Tickets)",
         ha="center", va="center", fontsize=9,
-        bbox=dict(boxstyle="round,pad=0.3",
+        bbox=dict(boxstyle="round,pad=1.3",
                   edgecolor="red", facecolor="white"))
 
 # --------------------------------------------------
