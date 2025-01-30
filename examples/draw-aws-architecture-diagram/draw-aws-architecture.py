@@ -56,11 +56,11 @@ for i, (cx, cy) in enumerate(csv_coords, start=1):
                       edgecolor=s3_color, facecolor="white"))
 
 # Amazon S3 to the right of CSV box
-s3_pos = (4.5, 4.5)  # x=4.5, y=4.5
+s3_pos = (3.1, 4.0)  # x=4.5, y=4.5
 ax.text(*s3_pos,
         "Amazon S3\n(Reports)",
         ha="center", va="center", fontsize=9,
-        bbox=dict(boxstyle="round,pad=0.3",
+        bbox=dict(boxstyle="round,pad=0.5",
                   edgecolor="black", facecolor=s3_color, alpha=0.8))
 
 # Arrow from top CSV to S3
