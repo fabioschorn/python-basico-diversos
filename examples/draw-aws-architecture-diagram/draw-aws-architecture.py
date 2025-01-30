@@ -1,40 +1,44 @@
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 
-# Create the figure and axis
-fig, ax = plt.subplots(figsize=(10, 7))
+# Create figure and axis
+fig, ax = plt.subplots(figsize=(12, 6))
 ax.set_xlim(0, 10)
-ax.set_ylim(0, 10)
+ax.set_ylim(0, 8)
 ax.axis("off")
 
-# Define colors and styles
-box_style = dict(boxstyle="round,pad=0.3", edgecolor="black", facecolor="lightgray")
+# Define colors and styles for AWS services
+box_style = dict(boxstyle="round,pad=0.3", edgecolor="black", facecolor="white")
+lambda_color = "#F58536"  # AWS Lambda color
+db_color = "#527FFF"  # AWS RDS/DynamoDB color
+s3_color = "#569A31"  # AWS S3 color
+jira_color = "#0052CC"  # JIRA color
 
-# AWS Services Boxes
+# Define positions for AWS services
 components = {
-    "Amazon S3": (1, 8),
-    "AWS Lambda\n'Parser'": (3, 8),
-    "Amazon DynamoDB\nor RDS": (5, 8),
-    "AWS Lambda\n'Comparer'": (7, 8),
-    "JIRA (External)": (9, 8),
-    "AWS Lambda\n'TicketStatusCheck'": (7, 5),
+    "Amazon S3": (1, 6, s3_color),
+    "AWS Lambda 'Parser'": (3, 6, lambda_color),
+    "Amazon DynamoDB / RDS": (5, 6, db_color),
+    "AWS Lambda 'Comparer'": (7, 6, lambda_color),
+    "JIRA (External)": (9, 6, jira_color),
+    "AWS Lambda 'TicketStatusCheck'": (7, 3, lambda_color),
 }
 
 # Draw AWS components
-for text, (x, y) in components.items():
+for text, (x, y, color) in components.items():
     ax.text(x, y, text, ha="center", va="center", fontsize=10,
-            bbox=box_style)
+            bbox=dict(boxstyle="round,pad=0.3", edgecolor="black", facecolor=color, alpha=0.7))
 
-# Arrows representing data flow
+# Draw arrows for data flow
 arrows = [
-    ((1.8, 8), (2.2, 8), "CSV"),
-    ((3.8, 8), (4.2, 8), "Parse & Split"),
-    ((5.8, 8), (6.2, 8), "Store QID"),
-    ((7.8, 8), (8.2, 8), "Compare & Identify Diff"),
-    ((9, 7.7), (9, 6.3), "Call JIRA"),
-    ((9, 5.7), (9, 5.3), "Webhook/Poll"),
-    ((8.2, 5), (7.8, 5), "Check Ticket Status"),
-    ((7, 4.3), (7, 3.7), "Update DB or S3"),
+    ((1.8, 6), (2.2, 6), "(1) CSV"),
+    ((3.8, 6), (4.2, 6), "(2) Parse & Split"),
+    ((5.8, 6), (6.2, 6), "(3) Store QID"),
+    ((7.8, 6), (8.2, 6), "(4) Compare & Identify Diff"),
+    ((9, 5.5), (9, 4.5), "(5) Call JIRA"),
+    ((9, 3.5), (9, 3), "Webhook / Poll"),
+    ((8.2, 3), (7.8, 3), "(6) If Ticket Closed"),
+    ((7, 2.5), (7, 2), "Update DB or S3"),
 ]
 
 # Draw arrows
@@ -44,5 +48,11 @@ for (x1, y1), (x2, y2), label in arrows:
     ax.text((x1 + x2) / 2, (y1 + y2) / 2, label,
             ha="center", va="center", fontsize=8, color="black")
 
-# Display the architecture diagram
+# Draw enclosing AWS Cloud Box
+aws_box = mpatches.FancyBboxPatch((0.5, 1.5), 9, 6.5, boxstyle="round,pad=0.3",
+                                  edgecolor="black", facecolor="lightgray", alpha=0.3)
+ax.add_patch(aws_box)
+ax.text(5, 7.5, "AWS Cloud", ha="center", va="center", fontsize=12, fontweight="bold")
+
+# Show final architecture diagram
 plt.show()
