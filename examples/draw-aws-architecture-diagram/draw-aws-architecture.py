@@ -73,7 +73,7 @@ ax.annotate("Upload CSVs",
 # --------------------------------------------------
 # 2) AWS Cloud bounding box (covering center to right)
 # --------------------------------------------------
-aws_x, aws_y = 4.0, 0.5
+aws_x, aws_y = 4.2, 0.5
 aws_w, aws_h = 11.5, 7.0
 
 aws_box = mpatches.FancyBboxPatch(
