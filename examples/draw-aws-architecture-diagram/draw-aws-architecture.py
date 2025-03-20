@@ -1,10 +1,11 @@
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 
+# I'm still tweaking and playing around, but I'll upload it anyway!!!
 fig, ax = plt.subplots(figsize=(16, 8))
 ax.set_xlim(0, 16)
 ax.set_ylim(0, 8)
-ax.axis("on") # Turn on if you want to see the axes
+ax.axis("off") # Turn on if you want to see the axes
 
 # --- Colors ---
 lambda_color = "#F58536"
