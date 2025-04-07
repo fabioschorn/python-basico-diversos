@@ -1,0 +1,5 @@
+.DS_Store*
+# Ignore python virtual environments
+venv/
+venv3/
+data/
