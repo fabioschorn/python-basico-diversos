@@ -11,4 +11,4 @@ This repository is a collection of several basic Python code examples and my bas
  - [Python 3 Documentation about PIP - The Python Package Installer](https://pip.pypa.io/en/stable/)
  - [Python 3 Documentation about PEP 8](https://pep8.org/)
 
-NOTE: Code examples taken from Mark Summerfield's Python 3 book, some examples from Data Science from scratch, and some examples from my own experience and some courses that I did. The code is not perfect, but it works. I'm learning Python and I'm sharing my code with you. Finally, if you have any suggestions or improvements, please let me know.
+NOTE: Code examples taken from Mark Summerfield's Python 3 book, some examples from Data Science from Scratch by Joel Grus, and some examples from my own experience and some courses that I did. The code is not perfect, but it works. I'm learning Python and I'm sharing my code with you. Finally, if you have any suggestions or improvements, please let me know.
