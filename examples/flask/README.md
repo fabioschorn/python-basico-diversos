@@ -7,7 +7,7 @@ This is the repository for the course "Developing AI Applications with Python an
 - [Lab3 - A simple Web Calculator](https://github.com/fabioschorn/python-basico-diversos/tree/main/examples/flask/lab3)
 - [Lab4 - A simple CRUD Web Application](https://github.com/fabioschorn/python-basico-diversos/tree/main/examples/flask/lab4)
 - [Lab5 - A simple sentiment analysis Web App with AI](https://github.com/fabioschorn/python-basico-diversos/tree/main/examples/flask/lab5)
-- [Lab6 - ](https://github.com/fabioschorn/python-basico-diversos/tree/main/examples/flask/lab6)
+- [Lab6 - A simple AI-Based Web App Development and Deployment](https://github.com/fabioschorn/python-basico-diversos/tree/main/examples/flask/lab6)
 - [Sample data](https://github.com/fabioschorn/python-basico-diversos/tree/main/examples/flask/sample-data)
 
 ## More information
